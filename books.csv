@@ -1,0 +1,9 @@
+title,author,year,IFBOROROWED,date_of_rental,return_date,book_type
+Brave New World,Aldous Huxley,1932,TRUE,20.03.2018,27.03.2018,fiction
+Lord of the Flies,William Golding,1954,FALSE,01.03.2018,08.03.2018,fiction
+Nineteen Eighty-Four,George Orwell,1949,TRUE,19.03.2018,26.03.2018,fiction
+Fahrenheit 451,Ray Bradbury,1953,FALSE,20.02.2018,27.02.2018,fiction
+Morderstwo w Orient Expressie,Agatha Christie,1934,TRUE,16.03.2018,23.03.2018,crime
+Ultimatum Borne'a,Robert Ludlum,1990,FALSE,01.01.2018,08.01.2018,crime
+Rainbow Six,Tom Clancy,1998,TRUE,20.03.2018,27.03.2018,crime
+Mordercza Gora,Pat Falvey,2008,FALSE,23.04.2017,30.04.2017,adventure
