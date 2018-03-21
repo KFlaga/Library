@@ -30,23 +30,27 @@ def search_by_letter():
 def search_by_type():
     """Lists all books from the set type"""
     print("What type of book are you looking for? Enter a number \n1.fantasy\n2.crime\n3.adventure")
-    book_type_number = input('>  ')
 
-    if book_type_number in book_type_translator:
-        book_type = book_type_translator[book_type_number]
-        with open('books.csv', 'r') as book_base:
-            book_list = csv.reader(book_base)
-            next(book_list)
+    book_type_number = 0
 
-            for line in book_list:
-                book_data = line.split(',')
-                if book_data[-1] == book_type:
-                    print(book_data)
+    while book_type_number != 'X'
+        book_type_number = input('>  ')
+        if book_type_number in book_type_translator:
+            book_type = book_type_translator[book_type_number]
+            with open('books.csv', 'r') as book_base:
+                book_list = csv.reader(book_base)
+                next(book_list)
 
-    elif book_type_number is 'X':
-        return
-    else:
-        print("Book type invalid, try again or [X] to exit")
+                for line in book_list:
+                    book_data = line.split(',')
+                    if book_data[-1] == book_type:
+                        print(book_data)
+
+        elif book_type_number is 'X':
+            return
+        else:
+            print("Book type invalid, try again or [X] to exit")
+
 
 
 def check_my_books():
