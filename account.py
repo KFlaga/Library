@@ -28,7 +28,13 @@ def search_by_letter():
     return()
 
 def search_by_type():
-    pass
+    """Lists all books from the set type"""
+    print("What type of book are you looking for? Enter a number \n1.fantasy\n2.crime\n3.adventure")
+    book_type_number = input('>  ')
+    if book_type_translator[book_type_number] = 'fantasy'
+        #list all fantasy Books
+    elif book_type_translator[book_type_number] is 'crime':
+        
 
 def check_my_books():
     pass
@@ -47,3 +53,9 @@ def change_surname():
 
 def change_password():
     pass
+
+book_type_translator = {
+    '1':'fantasy',
+    '2':'crime',
+    '3':'adventure'
+    }

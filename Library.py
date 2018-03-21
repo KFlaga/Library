@@ -12,7 +12,7 @@ class Logging():
 class Account():
     pass
 
-class Account_creation():
+class AccountCreation():
     pass
 
 class Librarian():
