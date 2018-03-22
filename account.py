@@ -1,10 +1,11 @@
 import csv
+from datetime import datetime
 
 def search_for_books():
     """Ask for the type of search and then lists the books based of the criteria"""
     type_of_search = 0
-    print("Do you want to search for books by the first letter of the title [A] or by the type [T]? ")
     while type_of_search is not 'X':
+        print("Do you want to search for books by the first letter of the title [A]\n or by the type [T]? ")
         type_of_search = input(">  ")
         if type_of_search == 'A':
             search_by_letter()
@@ -16,24 +17,31 @@ def search_for_books():
 
 def search_by_letter():
     """ Lists books that are starting with the entered letter"""
-    print("What is the first letter of the searched title? Use bigcase")
+    print("What is the first letter of the searched title? Use uppercase")
     letter = input(">  ")
     with open('books.csv', 'r') as book_base:
         book_list = csv.reader(book_base)
         next(book_list)
 
-        for line in book_list:
-            if startswith(letter):
-                print(line)
+        for book_data in book_list:
+            if book_data[0].startswith(letter):
+                print(book_data)
     return
 
 def search_by_type():
+    book_type_translator = {
+        '1':'fiction',
+        '2':'crime',
+        '3':'adventure'
+    }
+
     """Lists all books from the set type"""
-    print("What type of book are you looking for? Enter a number \n1.fantasy\n2.crime\n3.adventure")
+    print("What type of book are you looking for? Enter a number")
+    print("\n".join(f"{num}.{genre}" for num, genre in book_type_translator.items()))
 
     book_type_number = 0
 
-    while book_type_number != 'X'
+    while book_type_number != 'X':
         book_type_number = input('>  ')
         if book_type_number in book_type_translator:
             book_type = book_type_translator[book_type_number]
@@ -41,8 +49,7 @@ def search_by_type():
                 book_list = csv.reader(book_base)
                 next(book_list)
 
-                for line in book_list:
-                    book_data = line.split(',')
+                for book_data in book_list:
                     if book_data[-1] == book_type:
                         print(book_data)
 
@@ -71,8 +78,5 @@ def change_surname():
 def change_password():
     pass
 
-book_type_translator = {
-    '1':'fantasy',
-    '2':'crime',
-    '3':'adventure'
-    }
+
+search_for_books()

@@ -7,7 +7,22 @@ class Books():
     pass
 
 class Logging():
-    pass
+    """ Gives user possibility to either log in or to create account"""
+    print("""Welcome to the LIBRARY 6000 system!
+          1 To log in
+          2 To create a new account
+          3 To exit
+          """
+         )
+    choice = input('>  ')
+
+    while choise is not '3'
+        if choice is '1':
+            log_in()
+        elif choice is '2':
+            create_account()
+        else:
+            print("Wrong comment, try again")
 
 class Account():
     pass
