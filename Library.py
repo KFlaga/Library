@@ -1,4 +1,4 @@
-
+import csv
 
 class Person():
     pass
@@ -19,7 +19,7 @@ class Books(object):
     # add junction between books.csv and users holding the books
     # add multiple books of the same kind to the database and solve the
     # problems associated
-    #
+
 
 class Logging(object):
     """ Gives user possibility to either log in or to create account"""
@@ -31,7 +31,7 @@ class Logging(object):
             3 To exit
             """
             )
-             
+
         choice = input('>  ')
 
         while choise is not '3':
@@ -47,8 +47,17 @@ class Logging(object):
 
 class Account(login):
 
-    __init__(self.login):
+    # long useless init for mt own amusement
+    def __init__(self,login):
         self.login = login
+        with open('data.csv','r') as data_file:
+            data_list = csv.reader(data_file)
+            for person_data in data_list:
+                if self.login == person_data[2]:
+                    self.name = person_data[0]
+                    self.surname = person_data[1]
+                    self.password = person_data[3]
+
         #call for person data
 
     def main():
@@ -61,7 +70,9 @@ class Account(login):
             4. Log out
             """
             )
+
         choice = '0'
+
         while choice is not '4':
             choice = input('>  ')
             if choice is '1':
@@ -69,9 +80,14 @@ class Account(login):
             elif choice is '2':
                 check_my_books()
             elif choice is '3':
-                change_account_details()
+                change_account_details(
+                self.name,
+                self.surname,
+                self.password
+                )
             else:
                 print("Wrong command, try again")
+
         Logging.main()
 
 class Librarian():

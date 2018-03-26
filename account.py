@@ -66,8 +66,31 @@ def check_my_books():
 def rent_book():
     pass
 
-def change_account_details():
-    pass
+def change_account_details(name,surname,password):
+
+    change = '0'
+    while change is not '4':
+        print("""
+        What do you want to change?
+        1. Name
+        2. Surname
+        3. Password
+        4. To Exit
+        """
+        )
+        change = input('>  ')
+
+        if change == '1':
+            change_name(password)
+        elif change == '2':
+            change_surname(password)
+        elif change == '3':
+            change_surname(password)
+        elif change =='4'
+            return
+        else:
+            print("Error, wrong value\n\n\")
+    
 
 def change_name():
     pass
