@@ -21,30 +21,58 @@ class Books(object):
     # problems associated
     #
 
-class Logging():
+class Logging(object):
     """ Gives user possibility to either log in or to create account"""
-    print("""Welcome to the LIBRARY 6000 system!
-          1 To log in
-          2 To create a new account
-          3 To exit
-          """
-         )
-    choice = input('>  ')
+    def main():
+        print("""
+            Welcome to the LIBRARY 6000 system!
+            1 To log in
+            2 To create a new account
+            3 To exit
+            """
+            )
+             
+        choice = input('>  ')
 
-    while choise is not '3':
-        if choice is '1':
-            login = log_in() # login is users indicator
-            Account(login)
-        elif choice is '2':
-            create_account()
-        else:
-            print("Wrong comment, try again")
-    print("Closing the system, goodbye")
-    
+        while choise is not '3':
+            if choice is '1':
+                login = log_in() # login is users indicator
+                Account.main(login)
+            elif choice is '2':
+                create_account()
+            else:
+                print("Wrong comment, try again")
+        print("Closing the system, goodbye")
 
-class Account():
-    pass # add a small self.__init__ function to do sth
 
+class Account(login):
+
+    __init__(self.login):
+        self.login = login
+        #call for person data
+
+    def main():
+        print("""
+            Welcome to your page
+            What do you want to do?
+            1. Search for a book
+            2. Check your books
+            3. Change your account data
+            4. Log out
+            """
+            )
+        choice = '0'
+        while choice is not '4':
+            choice = input('>  ')
+            if choice is '1':
+                search_for_books()
+            elif choice is '2':
+                check_my_books()
+            elif choice is '3':
+                change_account_details()
+            else:
+                print("Wrong command, try again")
+        Logging.main()
 
 class Librarian():
     def adding_books():
@@ -53,5 +81,5 @@ class Librarian():
         pass
     def person_search():
         pass
-    def delet_account():
+    def delete_account():
         pass
