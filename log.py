@@ -9,7 +9,12 @@ def create_account():
 
     login_test = 1
     while login_test == 1:
-        print("Welcome to the account creation!\nWhat is your new login?")
+        print("""
+        Welcome to the account creator!
+        To exit at any time type 'X'"
+        "What is your new login?
+        """
+        )
         login = input('>  ')
         login_test = login_taken(login)
 
@@ -25,6 +30,8 @@ def create_account():
     #add a function that cheks if email is not taken
     print("What is you password?")
     password = input('> ')
+
+    print("Congratulations,",name," you've created a new account!")
 
     data = []
     data.append(name)
@@ -44,22 +51,31 @@ def login_taken(login):
         next(data_list)
 
         for person_data in data_list:
-            if login == person_data[2]:
+            if person_data[2] is login:
                 print("ERROR\nLOGIN TAKEN")
                 return 1
     return 0
 
+
 def log_in():
-    """ Logs in the user into his accout"""
+    """ After verification with 'data.csv' base returns users login"""
     print("Hello User! Enter your login or enter 1. to create account")
-    check = 1
-    while check == 1:
+
+    check = 2
+
+    while check == 2:
         login = input('>  ')
-        if login == 1:
+
+        if login == '1':
             create_account()
-        print("Enter your password?")
+            print("Enter your login again")
+            login = input('>  ')
+
+        print("Enter your password")
         password = str(input('>  '))
-        check_password(login,password)
+        check = check_password(login,password)
+
+    return login
 
 
 def check_password(login, password):
@@ -70,16 +86,16 @@ def check_password(login, password):
         next(data_list)
 
         for person_data in data_list:
-            if login == person_data[2]\
-            and password == person_data[3]:
+            if person_data[2] == login\
+            and person_data[3] == password:
                 print("WORKS FINE")
                 return
-        print(
-        """Either password or Login is not good
-        To create a new account enter '1'
-        """
-        )
-        return 1
+    print(
+    """Either password or Login is not good. Enter your login again.
+    To create a new account enter '1'
+    """
+    )
+    return 2
 
 
 

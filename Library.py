@@ -18,11 +18,14 @@ class Logging():
 
     while choise is not '3'
         if choice is '1':
-            log_in()
+            login = log_in()
+            Account()
+
         elif choice is '2':
             create_account()
         else:
             print("Wrong comment, try again")
+    return "Logged" # Go to class account
 
 class Account():
     pass
