@@ -66,7 +66,9 @@ def check_my_books():
 def rent_book():
     pass
 
-def change_account_details(name,surname,password):
+def change_account_details():
+    login = 'P.Gynt'
+    password = '1234'
 
     change = '0'
     while change is not '4':
@@ -81,19 +83,54 @@ def change_account_details(name,surname,password):
         change = input('>  ')
 
         if change == '1':
-            change_name(password)
+            change_name(login,password)
         elif change == '2':
-            change_surname(password)
+            change_surname(login,password)
         elif change == '3':
-            change_surname(password)
-        elif change =='4'
+            change_password(login,password)
+        elif change =='4':
             return
         else:
-            print("Error, wrong value\n\n\")
-    
+            print("Error, wrong value")
 
-def change_name():
-    pass
+
+    # change_name()
+    # change_surname()
+    # change_password()
+
+def change_name(login,password):
+
+    print("What is your new name?")
+    new_name = input('>  ')
+    print("Enter your password to accept the change")
+    user_password = input('>  ')
+    if user_password == password:
+        with open("data.csv", 'r') as data_base_r:
+            data_list = csv.reader(data_base_r)
+            next(data_list)
+
+            line = []
+
+            for lines in data_list:
+                if lines[2] == login:
+                    data_line = lines
+                    break
+
+            print(data_line)
+
+            with open('data.csv', 'w') as data_base_w:
+                data_writer = csv.writer(data_base_w)
+                for lines in data_writer:
+                    csv.writer.writerow(lines)
+                except lines[2] == login:
+                    csv.writer.writerow(data_line)
+
+            for lines in data_list:
+                if lines[2] == login:
+                    lines[3] = csv.writer(password)
+
+# Read about writer function if such a change is possible
+#if yes, copy the funcion to change_surname() and change_password()
 
 def change_surname():
     pass
@@ -102,4 +139,4 @@ def change_password():
     pass
 
 
-search_for_books()
+change_account_details()

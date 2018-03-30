@@ -8,7 +8,7 @@ class Person():
 # There should be also an information for the librarian who has the book
 # so that info should stay with the book?
 # Book shouldn't have all its info in one file as it complicates
-# adding books. There shoudl be corelated file that woudl keep that data
+# adding books. There should be corelated file that would keep that data
 # and book should have
 
 class Books(object):
@@ -60,7 +60,7 @@ class Account(login):
 
         #call for person data
 
-    def main():
+    def main_page():
         print("""
             Welcome to your page
             What do you want to do?
@@ -81,14 +81,15 @@ class Account(login):
                 check_my_books()
             elif choice is '3':
                 change_account_details(
-                self.name,
-                self.surname,
+                self.login
                 self.password
                 )
             else:
                 print("Wrong command, try again")
 
         Logging.main()
+
+
 
 class Librarian():
     def adding_books():
