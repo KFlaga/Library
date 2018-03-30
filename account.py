@@ -1,5 +1,5 @@
 import csv
-from datetime import datetime
+import time
 
 def search_for_books():
     """Ask for the type of search and then lists the books based of the criteria"""
@@ -104,33 +104,37 @@ def change_name(login,password):
     new_name = input('>  ')
     print("Enter your password to accept the change")
     user_password = input('>  ')
+
     if user_password == password:
-        with open("data.csv", 'r') as data_base_r:
-            data_list = csv.reader(data_base_r)
-            next(data_list)
+        with open('data.csv', 'r') as data_base_r:
+            data_reader = csv.reader(data_base_r)
 
-            line = []
+            # seearching for a line with inputed login
+            with open("data.csv", 'r') as login_search:
+                login_reader = csv.reader(login_search)
+                next(login_reader)
 
-            for lines in data_list:
-                if lines[2] == login:
-                    data_line = lines
-                    break
+                for lines in login_reader:
+                    if lines[2] == login:
+                        data_line = lines
+                        break
 
-            print(data_line)
+            data_line[0] = new_name
 
-            with open('data.csv', 'w') as data_base_w:
+            # find a way to print out the data to a new file with a
+            # saving date as a name/header
+            # Also find a way to read only the latest file for our readings
+
+            with open('data1.csv', 'w') as data_base_w:
                 data_writer = csv.writer(data_base_w)
-                for lines in data_writer:
-                    csv.writer.writerow(lines)
-                except lines[2] == login:
-                    csv.writer.writerow(data_line)
 
-            for lines in data_list:
-                if lines[2] == login:
-                    lines[3] = csv.writer(password)
-
-# Read about writer function if such a change is possible
-#if yes, copy the funcion to change_surname() and change_password()
+                for line in data_reader:
+                    if line[2] == login:
+                        data_writer.writerow(data_line)
+                        print(data_line)
+                    else:
+                        data_writer.writerow(line)
+                        print(line)
 
 def change_surname():
     pass
@@ -138,5 +142,15 @@ def change_surname():
 def change_password():
     pass
 
+def date_namer():
 
-change_account_details()
+    date = time.strftime("%Y-%m-%d %H:%M:%S")
+    print(join(date,"USER DATA"))
+    print(f"User Data {date}")
+
+    #print(f"{num}.{genre}" for num, genre in book_type_translator.items())
+
+
+
+date_namer()
+#change_account_details()
