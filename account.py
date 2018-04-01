@@ -1,7 +1,8 @@
 import csv
-import time
 import os
-import numpy as np
+import datetime
+import date
+from datetime import timedelta
 
 def search_for_books():
     """Ask for the type of search and then lists the books based of the criteria"""
@@ -77,7 +78,6 @@ def check_my_books(login):
                 books_table.append([line[0],line[1],line[2]])
 
         print("Your rented books are:")
-        #add return dates to the printouti
 
         with open('books.csv', 'r') as book_base:
             book_reader = csv.reader(book_base)
@@ -88,11 +88,51 @@ def check_my_books(login):
                         print("Rented on",box[1],"\nTo Be returned on",box[2])
 
 
-
 def rent_book():
     """changes books data to 'rented' its 'return date' and by whom"""
-    pass
+    print("Which book do you wish to rent? Enter its code")
+    book_code = input('>  ')
+    book_code = 'C102' # temporary code, delete after finishing the function
 
+    with open('rented.csv', 'r') as rented_base:
+        rented_reader = csv.reader(rented_base)
+        next(rented_reader)
+
+        # Verify if the book is available
+        for line in rented_reader:
+            print(line[-2])
+            print("\n\n")
+            if line[0] == book_code:
+                print(line)
+                print(type(line[-2]))
+                if line[-2] == 'FALSE':
+                    print('Books is unavailable')
+                else:
+                    rented_book_data = line
+                    rent_book(login,book_code,rented_book_data)
+
+
+def rent_book(): #login, book_code,rented_book_data
+    """ changes books status into rented and sets in rental and return date"""
+
+    # modifying book_data:
+    rental_date = datetime.date.today()
+    newtime = date.strftime('%d%m%Y',rental_date)
+    print(newtime)
+    return_date = rental_date + timedelta(days= 40)
+    print(return_date)
+
+    with open('rented.csv', 'r') as rented_base_r:
+        rented_reader = csv.reader(rented_base_r)
+
+        # with open('rented_temp','w') as rented_base_w:
+        #     rented_writer = csv.writer(render_base_w)
+        #
+        #     for line in rented_reader:
+        #         if line[0] is book_code:
+        #             rented_writer.writerow(rented_book_data)
+        #         else:
+        #             rented_writer.writerow(line)
 
 def change_account_details():
     """ Depending on the imput changes account details in 'data.csv'"""
@@ -119,7 +159,6 @@ def change_account_details():
             return
         else:
             print("Error, wrong value")
-
 
 
 def change_data(login,password,changed_data):
@@ -175,4 +214,4 @@ def change_data(login,password,changed_data):
     else:
         print("Wrong password")
 
-check_my_books('A.Malek')
+rent_book()
