@@ -1,4 +1,4 @@
-title,author,year,ID,IFBOROROWED,date_of_rental,return_date,book_type
+title,author,year,ID,book_type
 Brave New World,Aldous Huxley,1932,F100,fiction
 Lord of the Flies,William Golding,1954,F101,fiction
 Nineteen Eighty-Four,George Orwell,1949,F102,fiction
