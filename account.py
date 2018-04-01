@@ -1,6 +1,7 @@
 import csv
 import time
 import os
+import numpy as np
 
 def search_for_books():
     """Ask for the type of search and then lists the books based of the criteria"""
@@ -61,14 +62,40 @@ def search_by_type():
 
 
 
-def check_my_books():
-    """checks the books rented by the person"""
-    pass
+def check_my_books(login):
+    """checks the books rented by the person in rented.csv base"""
+
+    with open('rented.csv', 'r') as rented_base:
+        rented_reader = csv.reader(rented_base)
+        next(rented_reader)
+
+        books_table = []
+
+        #rented books[ID,rental_date,return_date,login]
+        for line in rented_reader:
+            if line[-1] == login:
+                books_table.append([line[0],line[1],line[2]])
+
+        print("Your rented books are:")
+        #add return dates to the printouti
+
+        with open('books.csv', 'r') as book_base:
+            book_reader = csv.reader(book_base)
+            for line in book_reader:
+                for box in books_table:
+                    if line[3] == box[0]:
+                        print(line)
+                        print("Rented on",box[1],"\nTo Be returned on",box[2])
+
+
 
 def rent_book():
     """changes books data to 'rented' its 'return date' and by whom"""
     pass
+
+
 def change_account_details():
+    """ Depending on the imput changes account details in 'data.csv'"""
 
     change = '0'
     while change is not '4':
@@ -147,3 +174,5 @@ def change_data(login,password,changed_data):
 
     else:
         print("Wrong password")
+
+check_my_books('A.Malek')
