@@ -96,7 +96,3 @@ def check_password(login, password):
     """
     )
     return 2
-
-
-
-log_in()
