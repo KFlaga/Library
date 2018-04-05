@@ -1,4 +1,5 @@
 import csv
+import os
 
 
 def adding_books():
@@ -71,30 +72,40 @@ def adding_books():
         rented_appender.writerow(new_rented)
 
 
-def deleting_books(kook_code):
+def deleting_books():
+    book_code = "A101"
     """ Deletes certain book from librairies, intakes books code"""
 
-        """changes books data to 'rented' its 'return date' and by whom"""
-        print("Which book do you wish to rent? Enter its code")
-        book_code = input('>  ')
-        book_code = 'A100' # temporary code, delete after finishing the function
-        login = 'P.Gynt'
-        with open('rented.csv', 'r') as rented_base:
-            rented_reader = csv.reader(rented_base)
-            next(rented_reader)
+    print("Which book do you wish to rent? Enter its code")
 
-            # Verify if the book is available
+    with open('rented.csv', 'r', newline='') as rented_base_r:
+        rented_reader = csv.reader(rented_base_r)
+
+        with open('rented_temp.csv','w',newline='') as rented_base_w:
+            rented_writer = csv.writer(rented_base_w)
+
+# rented.csv = [book_code,rental_date,return_date,RETURNED,login ]
             for line in rented_reader:
-                print(line[-2])
-                print("\n\n")
                 if line[0] != book_code:
-                    rented_book_data = line
-                    change_books_status(login,book_code,rented_book_data)
-                    break
+                    rented_writer.writerow(line)
 
-        os.remove('rented.csv')
-        os.rename('rented_temp.csv','rented.csv')
+    with open('books.csv', 'r', newline='') as book_base_r:
+        book_reader = csv.reader(book_base_r)
 
+        with open('books_temp.csv', 'w', newline='') as book_base_w:
+            book_writer = csv.writer(book_base_w)
+
+            for row in book_reader:
+                if row[3] != book_code:
+                    book_writer.writerow(row)
+
+
+
+    os.remove('rented.csv')
+    os.rename('rented_temp.csv','rented.csv')
+
+    os.remove('books.csv')
+    os.rename('books_temp.csv','books.csv')
 
 
 
@@ -105,4 +116,4 @@ def person_search():
 def delete_account():
     pass
 
-adding_books()
+deleting_books()
