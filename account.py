@@ -93,8 +93,7 @@ def rent_book():
     """changes books data to 'rented' its 'return date' and by whom"""
     print("Which book do you wish to rent? Enter its code")
     book_code = input('>  ')
-    book_code = 'A100' # temporary code, delete after finishing the function
-    login = 'P.Gynt'
+
     with open('rented.csv', 'r') as rented_base:
         rented_reader = csv.reader(rented_base)
         next(rented_reader)

@@ -57,17 +57,45 @@ def adding_books():
     print('What is the year the books has been published?')
     year = int(input('>  '))
 
-    books_table = [title, author, year, new_code, book_type]
-
+    new_book = [title, author, year, new_code, book_type]
     # rented_table = [ID,rental_date,return_date,RETURNED,login]
-    rented_table = [new_code,,,'TRUE',login]
+    new_rented = [new_code,0,0,'TRUE',0]
 
-    
     # morifier of booth books.csv and rented.csv files
+    with open('books.csv', 'a') as book_base:
+        book_appender = csv.writer(book_base)
+        book_appender.writerow(new_book)
+
+    with open('rented.csv', 'a') as rented_base:
+        rented_appender = csv.writer(rented_base)
+        rented_appender.writerow(new_rented)
 
 
-def deleting_books():
-    pass
+def deleting_books(kook_code):
+    """ Deletes certain book from librairies, intakes books code"""
+
+        """changes books data to 'rented' its 'return date' and by whom"""
+        print("Which book do you wish to rent? Enter its code")
+        book_code = input('>  ')
+        book_code = 'A100' # temporary code, delete after finishing the function
+        login = 'P.Gynt'
+        with open('rented.csv', 'r') as rented_base:
+            rented_reader = csv.reader(rented_base)
+            next(rented_reader)
+
+            # Verify if the book is available
+            for line in rented_reader:
+                print(line[-2])
+                print("\n\n")
+                if line[0] != book_code:
+                    rented_book_data = line
+                    change_books_status(login,book_code,rented_book_data)
+                    break
+
+        os.remove('rented.csv')
+        os.rename('rented_temp.csv','rented.csv')
+
+
 
 
 def person_search():
