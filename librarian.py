@@ -1,5 +1,7 @@
 import csv
 import os
+import operator
+import numpy as np
 
 
 def adding_books():
@@ -47,8 +49,6 @@ def adding_books():
     code_number = str(code_number)
     new_code = ''.join([code_letter[0],code_number])
 
-
-
     print("What is the books title?")
     title = input('>  ')
 
@@ -72,11 +72,8 @@ def adding_books():
         rented_appender.writerow(new_rented)
 
 
-def deleting_books():
-    book_code = "A101"
+def deleting_books(book_code):
     """ Deletes certain book from librairies, intakes books code"""
-
-    print("Which book do you wish to rent? Enter its code")
 
     with open('rented.csv', 'r', newline='') as rented_base_r:
         rented_reader = csv.reader(rented_base_r)
@@ -84,7 +81,7 @@ def deleting_books():
         with open('rented_temp.csv','w',newline='') as rented_base_w:
             rented_writer = csv.writer(rented_base_w)
 
-# rented.csv = [book_code,rental_date,return_date,RETURNED,login ]
+            # rented.csv = [book_code,rental_date,return_date,RETURNED,login ]
             for line in rented_reader:
                 if line[0] != book_code:
                     rented_writer.writerow(line)
@@ -108,12 +105,65 @@ def deleting_books():
     os.rename('books_temp.csv','books.csv')
 
 
-
 def person_search():
+    """Lists all users alphabetically by name then surname """
+
+    with open('data.csv','r') as data_base_r:
+        data_reader = csv.reader(data_base_r)
+
+        next(data_reader)
+        data_sorted = sorted(data_reader, key=operator.itemgetter(0, 1))
+        data_sorted = enumerate(data_sorted, 1)
+
+        for lines in data_sorted:
+            print('\n',lines[0], end = '  ')
+            for row in lines[1]:
+                print(row, end = ' ')
+
+
+def person_details():
+    """Lists details of a person (DictReader), his rented books etc"""
+    # printing account data
+    login = "P.Gynt"
+
+    with open('data.csv','r') as data_base_r:
+        data_reader = csv.DictReader(data_base_r)
+        next(data_reader)
+
+        print("Account data:\n")
+
+        for line in data_reader:
+            if line['login'] == login:
+                print(
+                '\n'.join(f"\t{data}: {person}" for data, person in line.items()))
+
+    print("\nAccounts books:\n")
+
+    with open('rented.csv', 'r') as rented_base_r:
+        rented_reader = csv.DictReader(rented_base_r)
+
+        with open('books.csv', 'r') as books_base_r:
+            books_reader = csv.DictReader(books_base_r)
+
+            for line in rented_reader:
+                if line['login'] == login:
+                    for row in books_reader:
+                        if line['ID'] == row['ID']:
+                            print("\n".join(f"\t{data}: {person}" for data, person in row.items()))
+                    
+
+
+
+            #            print("\n".join(f"{num}.{genre}" for num, genre in book_type_translator.items()))
+
+
+
+
+    # printing rented books
+
+
+def delete_account(login):
+    """ Delets users account"""
     pass
 
-
-def delete_account():
-    pass
-
-deleting_books()
+person_details()
