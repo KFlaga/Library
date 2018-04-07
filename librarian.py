@@ -123,7 +123,7 @@ def person_search():
 
 def person_details():
     """Lists details of a person (DictReader), his rented books etc"""
-    # printing account data
+
     login = "P.Gynt"
 
     with open('data.csv','r') as data_base_r:
@@ -135,7 +135,9 @@ def person_details():
         for line in data_reader:
             if line['login'] == login:
                 print(
-                '\n'.join(f"\t{data}: {person}" for data, person in line.items()))
+                    '\n'.join(f"\t{data}: {person}"
+                    for data, person in line.items())
+                    )
 
     print("\nAccounts books:\n")
 
@@ -149,8 +151,11 @@ def person_details():
                 if line['login'] == login:
                     for row in books_reader:
                         if line['ID'] == row['ID']:
-                            print("\n".join(f"\t{data}: {person}" for data, person in row.items()))
-                    
+                            print(
+                                "\n".join(f"\t{data}: {person}"
+                                for data, person in row.items())
+                                )
+
 
 
 
