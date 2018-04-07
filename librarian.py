@@ -155,6 +155,10 @@ def person_details():
                                 "\n".join(f"\t{data}: {person}"
                                 for data, person in row.items())
                                 )
+                            print(
+                            "\n\tRented on:", line['rental_date'],
+                            "\n\tTo be returned on:",line["return_date"]
+                                )
 
 
 
