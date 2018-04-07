@@ -1,7 +1,6 @@
 import csv
 import os
 import operator
-import numpy as np
 
 
 def adding_books():
@@ -121,10 +120,8 @@ def person_search():
                 print(row, end = ' ')
 
 
-def person_details():
+def person_details(login):
     """Lists details of a person (DictReader), his rented books etc"""
-
-    login = "P.Gynt"
 
     with open('data.csv','r') as data_base_r:
         data_reader = csv.DictReader(data_base_r)
@@ -166,17 +163,22 @@ def person_details():
                             break
 
 
+def delete_account():
+    login = 'P.Gynt'
+    """ Delets users account from data.csv"""
 
-            #            print("\n".join(f"{num}.{genre}" for num, genre in book_type_translator.items()))
+    with open('data.csv', 'r', newline='') as data_base_r:
+        data_reader = csv.reader(data_base_r)
 
 
+        with open('data_temp.csv','w', newline='') as data_base_w:
+            data_writer = csv.writer(data_base_w)
 
+            for line in data_reader:
+                if line[2] != login:
+                    data_writer.writerow(line)
 
-    # printing rented books
+    os.remove('data.csv')
+    os.rename('data_temp.csv','data.csv')
 
-
-def delete_account(login):
-    """ Delets users account"""
-    pass
-
-person_details()
+delete_account()
