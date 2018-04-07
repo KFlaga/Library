@@ -147,19 +147,23 @@ def person_details():
         with open('books.csv', 'r') as books_base_r:
             books_reader = csv.DictReader(books_base_r)
 
+            licznik = 0
+
             for line in rented_reader:
                 if line['login'] == login:
+                    licznik += 1
                     for row in books_reader:
                         if line['ID'] == row['ID']:
+                            print('  ',licznik,"__")
                             print(
                                 "\n".join(f"\t{data}: {person}"
                                 for data, person in row.items())
                                 )
                             print(
-                            "\n\tRented on:", line['rental_date'],
-                            "\n\tTo be returned on:",line["return_date"]
-                                )
-
+                                "\n\tRented on:", line['rental_date'],
+                                "\n\tTo be returned on:",line["return_date"],"\n\n"
+                            )
+                            break
 
 
 
