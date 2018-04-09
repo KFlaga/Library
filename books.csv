@@ -2,7 +2,7 @@ title,author,year,ID,book_type
 Brave New World,Aldous Huxley,1932,F100,fiction
 Lord of the Flies,William Golding,1954,F101,fiction
 Nineteen Eighty-Four,George Orwell,1949,F102,fiction
-Fahrenheit 451,Ray Bradbury,1953,FALSE,F103,fiction
+Fahrenheit 451,Ray Bradbury,1953,F103,fiction
 Morderstwo w Orient Expressie,Agatha Christie,1934,C100,crime
 Ultimatum Borne'a,Robert Ludlum,1990,C101,crime
 Rainbow Six,Tom Clancy,1998,C102,crime

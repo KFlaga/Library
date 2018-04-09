@@ -4,11 +4,17 @@ import datetime
 from datetime import timedelta
 from datetime import date
 
-def search_for_books():
+def search_for_books(): # Add information to the printout if the book is rented
     """Ask for the type of search and then lists the books based of the criteria"""
+
     type_of_search = 0
-    while type_of_search is not 'X':
-        print("Do you want to search for books by the first letter of the title [A]\n or by the type [T]? ")
+    while type_of_search != 'X':
+        print("""
+            Do you want to search for books by the first letter of the title [A]
+            or by the type [T]?
+            To exit enter 'X'
+            """
+            )
         type_of_search = input(">  ")
         if type_of_search == 'A':
             search_by_letter()
@@ -16,7 +22,7 @@ def search_for_books():
             search_by_type()
         else:
             print("Command unknown, write 'A' or 'T', to exit type 'X'")
-    return()
+    return
 
 
 def search_by_letter():
@@ -26,10 +32,15 @@ def search_by_letter():
     with open('books.csv', 'r') as book_base:
         book_list = csv.reader(book_base)
         next(book_list)
+        pointer = 0
 
         for book_data in book_list:
             if book_data[0].startswith(letter):
                 print(book_data)
+                pointer = 1
+
+        if pointer == 0:
+            print("Sorry, there is no book starting with this letter\n")
     return
 
 
@@ -42,7 +53,8 @@ def search_by_type():
 
     """Lists all books from the set type"""
     print("What type of book are you looking for? Enter a number")
-    print("\n".join(f"{num}.{genre}" for num, genre in book_type_translator.items()))
+    print(
+    "\n".join(f"{num}.{genre}" for num,genre in book_type_translator.items()))
 
     book_type_number = 0
 
@@ -57,6 +69,8 @@ def search_by_type():
                 for book_data in book_list:
                     if book_data[-1] == book_type:
                         print(book_data)
+                print('\n')
+                return
 
         elif book_type_number is 'X':
             return
@@ -89,26 +103,30 @@ def check_my_books(login):
                         print("Rented on",box[1],"\nTo Be returned on",box[2])
 
 
-def rent_book():
+def rent_book(login):
     """changes books data to 'rented' its 'return date' and by whom"""
+
     print("Which book do you wish to rent? Enter its code")
     book_code = input('>  ')
 
+    pointer = 0
     with open('rented.csv', 'r') as rented_base:
         rented_reader = csv.reader(rented_base)
         next(rented_reader)
 
         # Verify if the book is available
         for line in rented_reader:
-            print(line[-2])
-            print("\n\n")
             if line[0] == book_code:
                 if line[-2] == 'FALSE':
                     print('Books is unavailable')
+                    pointer = 1
                 else:
                     rented_book_data = line
                     change_books_status(login,book_code,rented_book_data)
                     break
+        if pointer == 0:
+            print("There is no book with this code")
+            return 0
 
     os.remove('rented.csv')
     os.rename('rented_temp.csv','rented.csv')
@@ -127,7 +145,7 @@ def change_books_status(login, book_code,rented_book_data):
     new_rented_data = [book_code,
                     rental_date,
                     return_date,
-                    'False',
+                    'FALSE',
                     login
                     ]
 
@@ -144,7 +162,7 @@ def change_books_status(login, book_code,rented_book_data):
                     rented_writer.writerow(line)
 
 
-def change_account_details():
+def change_account_details(login, password):
     """ Depending on the imput changes account details in 'data.csv'"""
 
     change = '0'
@@ -182,11 +200,10 @@ def change_data(login,password,changed_data):
     #add an f string here
     print("What is your new",changed_data,"?")
     new_data = input('>  ')
-    print("Enter your password to accept the change")
+    print("Enter your OLD password to accept the change")
     user_password = input('>  ')
 
     #Out data base will be outdayed after the change
-    #os.rename('data.csv','old_data.csv')
 
     if user_password == password:
         with open('data.csv', 'r') as data_base_r:
@@ -213,10 +230,8 @@ def change_data(login,password,changed_data):
                 for line in data_reader:
                     if line[2] == login:
                         data_writer.writerow(data_line)
-                        print(data_line)
                     else:
                         data_writer.writerow(line)
-                        print(line)
 
         os.remove('data.csv')
         os.rename('data_temp.csv','data.csv')

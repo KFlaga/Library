@@ -4,8 +4,8 @@ from datetime import datetime
 def create_account():
     """Adds person data into 'base.csv' """
 
-    with open('data.csv', 'a') as data
-    data_writer = csv.writer(file)
+    with open('data.csv', 'a', newline='') as data:
+        data_writer = csv.writer(data)
 
         login_test = 1
         while login_test == 1:
@@ -45,7 +45,6 @@ def create_account():
             data.append(email)
 
             data_writer.writerow(data)
-
 
 
 def login_taken(login):
