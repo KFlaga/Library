@@ -180,5 +180,3 @@ def delete_account():
 
     os.remove('data.csv')
     os.rename('data_temp.csv','data.csv')
-
-delete_account()
