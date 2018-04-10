@@ -10,24 +10,26 @@ def intro():
     choice = 0
     while choice != '3':
         print("""
-        _____________________________________________________
+            LOGIN______________________________
             Welcome to the LIBRARY 6000 system!
             1 To log in
             2 To create a new account
             3 To exit
+            
+            For librarian acces enter 'admin'
             """
             )
         choice = input('>  ')
 
-        if choice is '1':
+        if choice == '1':
             login, password = log.log_in()
             main_page(login, password)
-        elif choice is '2':
+        elif choice == '2':
             log.create_account()
-        elif choice is '3':
+        elif choice == '3':
             return
-        elif choice is 'admin':
-            librairian()
+        elif choice == 'admin':
+            librarian()
         else:
             print("Wrong comment, try again")
 
@@ -39,7 +41,7 @@ def main_page(login, password):
     choice = '0'
     while choice != '5':
         print("""
-        _____________________________________________
+            ACCOUNT_________________
             Welcome to your page
             What do you want to do?
             1. Search for a book
@@ -69,32 +71,34 @@ def main_page(login, password):
 def librarian():
     """Admins domain with access to admin funcitons """
 
-    print("""
-        ADMIN____________________
-        This is librairian account. What do you want to do?
-        1.Return a book
-        2. Add a book
-        3. Delete a book
-        4. Check person database
-        5. Delete users account
-        6. To quit
-        """
-        )
+    choice = 0
+    while choice != '6':
+        print("""
+            ADMIN____________________
+            This is librairian account. What do you want to do?
+            1. Return a book
+            2. Add a book
+            3. Delete a book
+            4. Check person database
+            5. Delete users account
+            6. To quit
+            """
+            )
         choice = input('>  ')
-        while choice != '6':
-            if choice is '1':
-                lib.rent_book(ID)
-            elif choice is '2':
-                lib.adding_books()
-            elif choice is '3':
-                lib.deleting_books()
-            elif choice is '4':
-                lib.person_search()
-            elif choice is '5':
-                lib.delete_account():
-            elif choice is '6':
-                print('Goodbye!')
-            else:
-                print("Wrong command, try again")
+
+        if choice is '1':
+            lib.return_book()
+        elif choice is '2':
+            lib.adding_books()
+        elif choice is '3':
+            lib.deleting_books()
+        elif choice is '4':
+            lib.person_search()
+        elif choice is '5':
+            lib.delete_account()
+        elif choice is '6':
+            print('Goodbye!')
+        else:
+            print("Wrong command, try again")
 
 intro()

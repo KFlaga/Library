@@ -127,6 +127,7 @@ def check_my_books(login):
                     if line[3] == box[0]:
                         print(line)
                         print("Rented on",box[1],"\nTo Be returned on",box[2])
+        input('> ')
 
 
 def rent_book(login):
