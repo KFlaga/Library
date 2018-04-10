@@ -1,5 +1,5 @@
 import csv
-import librarian
+import librarian as lib
 import log
 import account as ac
 
@@ -26,6 +26,8 @@ def intro():
             log.create_account()
         elif choice is '3':
             return
+        elif choice is 'admin':
+            librairian()
         else:
             print("Wrong comment, try again")
 
@@ -64,14 +66,35 @@ def main_page(login, password):
             print("Wrong command, try again")
 
 
-class Librarian():
-    def adding_books():
-        pass
-    def deleting_books():
-        pass
-    def person_search():
-        pass
-    def delete_account():
-        pass
+def librarian():
+    """Admins domain with access to admin funcitons """
+
+    print("""
+        ADMIN____________________
+        This is librairian account. What do you want to do?
+        1.Return a book
+        2. Add a book
+        3. Delete a book
+        4. Check person database
+        5. Delete users account
+        6. To quit
+        """
+        )
+        choice = input('>  ')
+        while choice != '6':
+            if choice is '1':
+                lib.rent_book(ID)
+            elif choice is '2':
+                lib.adding_books()
+            elif choice is '3':
+                lib.deleting_books()
+            elif choice is '4':
+                lib.person_search()
+            elif choice is '5':
+                lib.delete_account():
+            elif choice is '6':
+                print('Goodbye!')
+            else:
+                print("Wrong command, try again")
 
 intro()

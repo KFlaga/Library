@@ -29,6 +29,8 @@ def search_by_letter():
     """ Lists books that are starting with the entered letter"""
     print("What is the first letter of the searched title? Use uppercase")
     letter = input(">  ")
+
+    # books.csv = [title,author,year,ID,book_type]
     with open('books.csv', 'r') as book_base:
         book_list = csv.reader(book_base)
         next(book_list)
@@ -37,6 +39,8 @@ def search_by_letter():
         for book_data in book_list:
             if book_data[0].startswith(letter):
                 print(book_data)
+                ID = book_data[-2]
+                if_rented(ID)
                 pointer = 1
 
         if pointer == 0:
@@ -45,13 +49,14 @@ def search_by_letter():
 
 
 def search_by_type():
+    """Lists all books from the set type"""
+
     book_type_translator = {
         '1':'fiction',
         '2':'crime',
         '3':'adventure'
     }
 
-    """Lists all books from the set type"""
     print("What type of book are you looking for? Enter a number")
     print(
     "\n".join(f"{num}.{genre}" for num,genre in book_type_translator.items()))
@@ -62,6 +67,7 @@ def search_by_type():
         book_type_number = input('>  ')
         if book_type_number in book_type_translator:
             book_type = book_type_translator[book_type_number]
+            # books.csv = [title,author,year,ID,book_type]
             with open('books.csv', 'r') as book_base:
                 book_list = csv.reader(book_base)
                 next(book_list)
@@ -69,6 +75,9 @@ def search_by_type():
                 for book_data in book_list:
                     if book_data[-1] == book_type:
                         print(book_data)
+                        ID = book_data[-2]
+                        if_rented(ID)
+
                 print('\n')
                 return
 
@@ -78,22 +87,39 @@ def search_by_type():
             print("Book type invalid, try again or [X] to exit")
 
 
+def if_rented(ID):
+    """Checks if book is rented or not, prints the information"""
+
+    # rented.csv = [ID,rental_date,return_date,RETURNED,login]
+    with open('rented.csv','r') as rented_base:
+        rented_reader = csv.DictReader(rented_base)
+        for rented_data in rented_reader:
+            if rented_data['ID'] == ID:
+                if rented_data['RETURNED'] == 'TRUE':
+                    print("Book is available!")
+                else:
+                    print("\tBook is rented and should be back on",
+                        rented_data['return_date'],"\n"
+                        )
+
+
 def check_my_books(login):
     """checks the books rented by the person in rented.csv base"""
 
+    # rented.csv = [ID, rental_date, return_date, login]
     with open('rented.csv', 'r') as rented_base:
         rented_reader = csv.reader(rented_base)
         next(rented_reader)
 
         books_table = []
 
-        #rented books[ID,rental_date,return_date,login]
         for line in rented_reader:
             if line[-1] == login:
                 books_table.append([line[0],line[1],line[2]])
 
         print("Your rented books are:")
 
+        # books.csv = [title, author, year, ID, book_type]
         with open('books.csv', 'r') as book_base:
             book_reader = csv.reader(book_base)
             for line in book_reader:
@@ -109,21 +135,22 @@ def rent_book(login):
     print("Which book do you wish to rent? Enter its code")
     book_code = input('>  ')
 
-    pointer = 0
     with open('rented.csv', 'r') as rented_base:
         rented_reader = csv.reader(rented_base)
         next(rented_reader)
 
+        pointer = 0
         # Verify if the book is available
         for line in rented_reader:
             if line[0] == book_code:
+                pointer = 1
                 if line[-2] == 'FALSE':
                     print('Books is unavailable')
-                    pointer = 1
                 else:
                     rented_book_data = line
                     change_books_status(login,book_code,rented_book_data)
                     break
+
         if pointer == 0:
             print("There is no book with this code")
             return 0

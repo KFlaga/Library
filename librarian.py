@@ -17,7 +17,7 @@ def adding_books():
                                 '3':'A'
                                 }
 
-    print("""What type of a book do you wish to add? To exit type 'x'""")
+    print("\nWhat type of a book do you wish to add? To exit type 'x'")
     print("\n".join(f"{num}.{genre}" for num,
      genre in book_type_translator.items()))
 
@@ -71,8 +71,11 @@ def adding_books():
         rented_appender.writerow(new_rented)
 
 
-def deleting_books(book_code):
+def deleting_books():
     """ Deletes certain book from librairies, intakes books code"""
+
+    print("Enter books code:")
+    book_code = input('>  ')
 
     with open('rented.csv', 'r', newline='') as rented_base_r:
         rented_reader = csv.reader(rented_base_r)
@@ -106,6 +109,8 @@ def deleting_books(book_code):
 
 def person_search():
     """Lists all users alphabetically by name then surname """
+
+    print("Listing all the users!\n__________________________________")
 
     with open('data.csv','r') as data_base_r:
         data_reader = csv.reader(data_base_r)
@@ -163,13 +168,14 @@ def person_details(login):
                             break
 
 
-def delete_account():
-    login = 'P.Gynt'
+def delete_account(login):
     """ Delets users account from data.csv"""
+
+    print("Which account should be deleted? Enter its login:")
+    login = input('>  ')
 
     with open('data.csv', 'r', newline='') as data_base_r:
         data_reader = csv.reader(data_base_r)
-
 
         with open('data_temp.csv','w', newline='') as data_base_w:
             data_writer = csv.writer(data_base_w)
@@ -180,3 +186,46 @@ def delete_account():
 
     os.remove('data.csv')
     os.rename('data_temp.csv','data.csv')
+
+
+def return_book(ID):
+    """ In rented.csv sets books RETURNED status to TRUE """
+
+    print("Enter books code:")
+    ID = input('>  ')
+
+    returned_date = datetime.date.today()
+    returned_date = date.strftime(return_date,'%d.%m.%Y')
+
+    # rented = [ID,rental_date,return_date,RETURNED,login]
+    with open('rented.csv','r') as rented_base_r:
+        rented_reader = csv.reader(rented_base_r)
+
+        book_status = []
+        pointer = 0
+        for line is rented_reader:
+            if line[0] == ID:
+                book_status = [
+                            line[0],
+                            line[1],
+                            returned_date,
+                            "TRUE",
+                            , #empty place after the login
+                            ]
+                pointer = 1
+
+        if pointer != 0:
+            print('There is no book of this code in the database')
+            return 1
+
+        with open('rented_temp.csv','w', newline = '') as rented_base_w:
+            rented_writer = csv.writer(rented_base_w)
+
+            for row in rented_reader:
+                if line[0] == ID:
+                    rented_reader.writerow(book_status)
+                else:
+                    rented_reader.writerow(row)
+
+    os.remove('rented.csv')
+    os.rename('rented_temp.csv','rented.csv')
