@@ -117,7 +117,6 @@ def person_search():
     with open('data.csv','r') as data_base_r:
         data_reader = csv.reader(data_base_r)
 
-
         next(data_reader)
         data_sorted = sorted(data_reader, key=operator.itemgetter(0, 1))
         data_sorted = enumerate(data_sorted, 1)
@@ -153,10 +152,12 @@ def person_details(login):
             books_reader = csv.DictReader(books_base_r)
 
             licznik = 0
+            exist = 0
 
             for line in rented_reader:
                 if line['login'] == login:
                     licznik += 1
+                    exist = 1
                     for row in books_reader:
                         if line['ID'] == row['ID']:
                             print('  ',licznik,"__")
@@ -167,8 +168,10 @@ def person_details(login):
                             print(
                                 "\n\tRented on:", line['rental_date'],
                                 "\n\tTo be returned on:",line["return_date"],"\n\n"
-                            )
+                                )
                             break
+            if exist ==0:
+                print("There is no login of the kind in the database")
 
 
 def delete_account(login):
@@ -191,13 +194,8 @@ def delete_account(login):
     os.rename('data_temp.csv','data.csv')
 
 
-def return_book():
+def return_book(ID):
     """ In rented.csv sets books RETURNED status to TRUE """
-
-    print("Enter books code, to exit enter 'X':")
-    ID = input('>  ')
-    if ID == 'X':
-        return
 
     returned_date = datetime.date.today()
     returned_date = date.strftime(returned_date,'%d.%m.%Y')
@@ -236,3 +234,19 @@ def return_book():
 
     os.remove('rented.csv')
     os.rename('rented_temp.csv','rented.csv')
+
+
+def person_rented(login):
+
+    """ returns a list of IDs of books borrowed by the user"""
+
+# rented.csv = [ID,rental_date,return_date,RETURNED,login]
+    with open('rented.csv','r') as rented_base_r:
+        rented_reader = csv.DictReader(rented_base_r)
+        ID_list = []
+        for line in rented_reader:
+            if line['login'] == login:
+                ID_list.append(line['ID'])
+
+
+        return ID_list
