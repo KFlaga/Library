@@ -122,12 +122,15 @@ def check_my_books(login):
         # books.csv = [title, author, year, ID, book_type]
         with open('books.csv', 'r') as book_base:
             book_reader = csv.reader(book_base)
+            next(book_reader)
             for line in book_reader:
                 for box in books_table:
                     if line[3] == box[0]:
                         print(line)
-                        print("Rented on",box[1],"\nTo Be returned on",box[2])
-        input('> ')
+                        print("\tRented on",box[1],"\nTo be returned on",box[2])
+
+
+    input('> ')
 
 
 def rent_book(login):
@@ -150,6 +153,7 @@ def rent_book(login):
                 else:
                     rented_book_data = line
                     change_books_status(login,book_code,rented_book_data)
+                    print("Congratulations, you've rented a book!")
                     break
 
         if pointer == 0:

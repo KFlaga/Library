@@ -17,6 +17,8 @@ def create_account():
             )
             login = input('>  ')
             login_test = login_taken(login)
+            if login == 'X':
+                return
 
             if login_test == 1:
                 print('Unexpected problem, closing the creator!')
@@ -24,16 +26,24 @@ def create_account():
 
             print("What is your name?")
             name = input('>  ')
+            if name == 'X':
+                return
 
             print("What is your surname?")
             surname = input('>  ')
+            if surname == 'X':
+                return
 
             print("what is your email?")
             email = input('>  ')
+            if email == 'X':
+                return
 
             #add a function that cheks if email is not taken
             print("What is you password?")
             password = input('> ')
+            if password == 'X':
+                return
 
             print("Congratulations,",name," you've created a new account!")
 
