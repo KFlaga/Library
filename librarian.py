@@ -201,19 +201,20 @@ def return_book(ID):
     returned_date = date.strftime(returned_date,'%d.%m.%Y')
 
     # rented = [ID,rental_date,return_date,RETURNED,login]
-    book_status = []
     with open('rented.csv','r') as rented_base_r:
         rented_reader = csv.reader(rented_base_r)
+        next(rented_reader)
+        book_status = []
 
         pointer = 0
         for line in rented_reader:
             if line[0] == ID:
+                pointer = 1
                 book_status.append(line[0])
                 book_status.append(line[1])
                 book_status.append(returned_date)
                 book_status.append("TRUE")
                 book_status.append("") # empty place after the login
-                pointer = 1
         if pointer == 0:
             print('There is no book of this code in the database')
             return 1
@@ -247,6 +248,7 @@ def person_rented(login):
         for line in rented_reader:
             if line['login'] == login:
                 ID_list.append(line['ID'])
+
 
 
         return ID_list
