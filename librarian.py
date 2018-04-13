@@ -23,14 +23,10 @@ def adding_books():
     print("\n".join(f"{num}.{genre}" for num,
      genre in book_type_translator.items()))
 
-    type = 0
-    stoper = 0
-
-    # Creating new books ID (its type as the last one in the base)
-    while stoper == 0:
+    while True:
         type = input('>  ')
-        if type == '1' or type == '2' or type == '3':
-            stoper = 1
+        if type in book_type_translator:
+            break
         elif type == 'X':
             return
         else:
@@ -38,6 +34,8 @@ def adding_books():
 
     book_type = book_type_translator[type]
 
+    # extract to another function
+    # if I guess correctly it would be: find_highest_book_code_with_type()
     with open('rented.csv','r') as book_base:
         book_rented = csv.reader(book_base)
 
@@ -45,6 +43,8 @@ def adding_books():
             if line[0].startswith(book_type_translator_letter[type]):
                 code_letter = line[0]
 
+    # extract this low-level magic to small separate function and name it properly
+    # e.g. increment_book_code()
     code_number = int(code_letter[1:])
     code_number +=1
     code_number = str(code_number)
@@ -151,10 +151,10 @@ def person_details(login):
         with open('books.csv', 'r') as books_base_r:
             books_reader = csv.DictReader(books_base_r)
 
-            licznik = 0
+            licznik = 0 # this lone polish name :)
             exist = 0
 
-            for line in rented_reader:
+            for line in rented_reader: # rename `line` to `rented` and `row` to `book` or sth
                 if line['login'] == login:
                     licznik += 1
                     exist = 1
